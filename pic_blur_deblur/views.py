@@ -28,7 +28,6 @@ def upload(request):
         print(m11)
         print(m12)
 
-
         print(new_img.img.path)
         img_name = str(new_img.img.name).split('/')[1].split('.')[0]
 
@@ -37,14 +36,15 @@ def upload(request):
 
         cvimg = cv2.imread(new_img.img.path, 0)
         img_blur, img_B, img_C = blur(cvimg, 100, 1 / 4, 1 / 2, 1 / 4)
-
         img_deblur = cus_filter2D(cvimg)
+        img_cus = cus_filter2D(cvimg, m11, m12, m13, m21, m22, m23, m31, m32, m33)
 
         cv2.imwrite("media/" + img_name + "/source.jpg", cvimg)
         cv2.imwrite("media/" + img_name + "/blur.jpg", img_blur)
         cv2.imwrite("media/" + img_name + "/blur_B.jpg", img_B)
         cv2.imwrite("media/" + img_name + "/blur_C.jpg", img_C)
         cv2.imwrite("media/" + img_name + "/img_deblur.jpg", img_deblur)
+        cv2.imwrite("media/" + img_name + "/img_cus.jpg", img_cus)
 
         content = {
             'aaa': new_img,
@@ -53,45 +53,39 @@ def upload(request):
             'blur_B': "/media/" + img_name + "/blur_B.jpg",
             'blur_C': "/media/" + img_name + "/blur_C.jpg",
             'img_deblur': "/media/" + img_name + "/img_deblur.jpg",
+            'img_cus': "/media/" + img_name + "/img_cus.jpg",
 
         }
         return render(request, 'index.html', content)
 
-
     return render(request, 'index.html')
-def show(request):
 
+
+def show(request):
     new_img = IMG(img=request.FILES.get('img'))
     new_img.save()
     print(new_img.img.path)
     img_name = str(new_img.img.name).split('/')[1].split('.')[0]
-    if not os.path.isdir("media/"+img_name):
-        os.mkdir("media/"+img_name)
-
+    if not os.path.isdir("media/" + img_name):
+        os.mkdir("media/" + img_name)
 
     cvimg = cv2.imread(new_img.img.path, 0)
-    img_blur, img_B, img_C = blur(cvimg, 100, 1/4, 1/2, 1/4)
+    img_blur, img_B, img_C = blur(cvimg, 100, 1 / 4, 1 / 2, 1 / 4)
     img_deblur = cus_filter2D(cvimg)
 
-
-
-    cv2.imwrite("media/"+img_name+"/source.jpg", cvimg)
-    cv2.imwrite("media/"+img_name+"/blur.jpg", img_blur)
-    cv2.imwrite("media/"+img_name+"/blur_B.jpg", img_B)
-    cv2.imwrite("media/"+img_name+"/blur_C.jpg", img_C)
-    cv2.imwrite("media/"+img_name+"/img_deblur.jpg", img_deblur)
-
-
-
-
+    cv2.imwrite("media/" + img_name + "/source.jpg", cvimg)
+    cv2.imwrite("media/" + img_name + "/blur.jpg", img_blur)
+    cv2.imwrite("media/" + img_name + "/blur_B.jpg", img_B)
+    cv2.imwrite("media/" + img_name + "/blur_C.jpg", img_C)
+    cv2.imwrite("media/" + img_name + "/img_deblur.jpg", img_deblur)
 
     content = {
         'aaa': new_img,
-        'sourse' : "/media/"+img_name+"/source.jpg",
-        'blur' : "/media/"+img_name+"/blur.jpg",
-        'blur_B' : "/media/"+img_name+"/blur_B.jpg",
-        'blur_C' : "/media/"+img_name+"/blur_C.jpg",
-        'img_deblur' : "/media/"+img_name+"/img_deblur.jpg",
+        'sourse': "/media/" + img_name + "/source.jpg",
+        'blur': "/media/" + img_name + "/blur.jpg",
+        'blur_B': "/media/" + img_name + "/blur_B.jpg",
+        'blur_C': "/media/" + img_name + "/blur_C.jpg",
+        'img_deblur': "/media/" + img_name + "/img_deblur.jpg",
 
     }
     return render(request, 'index.html', content)

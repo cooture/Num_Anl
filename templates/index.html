@@ -40,72 +40,72 @@
 <form method="POST" enctype="multipart/form-data" role="form" class="form-inline">
     {% csrf_token %}
     <div style="text-align: center">
-    <h3>请输入自定义卷积核</h3>
+        <h3>请输入自定义卷积核</h3>
     </div>
 
     <table align="center">
-            <tr>
-                <td>
-                    <label class="sr-only"></label>
-                    <input type="text" style="width: 60px;" class="form-control" value="0" name="m11">
-                </td>
-                <td>
-                    <label class="sr-only"></label>
-                    <input type="text" style="width: 60px;" class="form-control" value="-1" name="m12">
-                </td>
-                <td>
-                    <label class="sr-only"></label>
-                    <input type="text" style="width: 60px;" class="form-control" value="0" name="m13">
-                </td>
+        <tr>
+            <td>
+                <label class="sr-only"></label>
+                <input type="text" style="width: 60px;" class="form-control" value="0" name="m11">
+            </td>
+            <td>
+                <label class="sr-only"></label>
+                <input type="text" style="width: 60px;" class="form-control" value="-1" name="m12">
+            </td>
+            <td>
+                <label class="sr-only"></label>
+                <input type="text" style="width: 60px;" class="form-control" value="0" name="m13">
+            </td>
 
-            </tr>
-            <tr>
-                <td>
-                    <label class="sr-only"></label>
-                    <input type="text" style="width: 60px;" class="form-control" value="-1" name="m21">
-                </td>
-                <td>
-                        <label class="sr-only"></label>
-                        <input type="text" style="width: 60px;" class="form-control" value="5" name="m22">
-                </td>
-                <td>
-                     <label class="sr-only"></label>
-                    <input type="text" style="width: 60px;" class="form-control" value="-1" name="m23">
+        </tr>
+        <tr>
+            <td>
+                <label class="sr-only"></label>
+                <input type="text" style="width: 60px;" class="form-control" value="-1" name="m21">
+            </td>
+            <td>
+                <label class="sr-only"></label>
+                <input type="text" style="width: 60px;" class="form-control" value="5" name="m22">
+            </td>
+            <td>
+                <label class="sr-only"></label>
+                <input type="text" style="width: 60px;" class="form-control" value="-1" name="m23">
 
-                </td>
-
-
-            </tr>
-            <tr>
-                <td>
-
-                        <label class="sr-only"></label>
-                        <input type="text" style="width: 60px;" class="form-control" value="0" name="m31">
-
-                </td>
-                <td>
-
-                        <label class="sr-only"></label>
-                        <input type="text" style="width: 60px;" class="form-control" value="-1" name="m32">
+            </td>
 
 
-                </td>
-                <td>
+        </tr>
+        <tr>
+            <td>
 
-                        <label class="sr-only"></label>
-                        <input type="text" style="width: 60px;" class="form-control" value="0" name="m33">
+                <label class="sr-only"></label>
+                <input type="text" style="width: 60px;" class="form-control" value="0" name="m31">
 
-                </td>
+            </td>
+            <td>
 
-            </tr>
-        </table>
+                <label class="sr-only"></label>
+                <input type="text" style="width: 60px;" class="form-control" value="-1" name="m32">
+
+
+            </td>
+            <td>
+
+                <label class="sr-only"></label>
+                <input type="text" style="width: 60px;" class="form-control" value="0" name="m33">
+
+            </td>
+
+        </tr>
+    </table>
     <hr>
     <hr>
 
     <div style="text-align: center">
-    <hr>
-    <h3>請選擇你要模糊或銳利化的圖片</h3>
-</div>
+        <hr>
+        <h3>請選擇你要模糊或銳利化的圖片</h3>
+    </div>
 
     <div style="text-align: center">
         <div class="form-group">
@@ -118,27 +118,59 @@
 <hr>
 
 
-
-
 <hr>
 <div class="text-info" style="text-align: center;font-size: 20px">
     <table class="table table-bordered" align="center" style="width: 400px">
-            <tr><td>原图</td></tr>
-            <tr class="img-box"><td><img src="{{ sourse}}" onerror="this.style.display='none'"></td></tr>
-            <tr><td>B^100*X</td></tr>
-        <tr class="img-box"><td><img src="{{ blur_B}}" onerror="this.style.display='none'"></td></tr>
-            <tr><td>X*C^100</td></tr>
-        <tr class="img-box"><td><img src="{{ blur_C }}" onerror="this.style.display='none'"></td></tr>
-            <tr><td>B^100*X*C^100</td></tr>
-        <tr class="img-box"><td><img src="{{ blur}}" onerror="this.style.display='none'"></td></tr>
-            <tr><td>自定义卷积核</td></tr>
-        <tr class="img-box"><td><img src="{{ img_deblur }}" onerror="this.style.display='none'"></td></tr>
-            <tr><td>素描效果</td></tr>
-        <tr class="img-box"><td><img src="/media/imgres/3.jpg" onerror="this.style.display='none'"></td></tr>
-            <tr><td>雕塑效果</td></tr>
-        <tr class="img-box"><td><img src="/media/imgres/3.jpg" onerror="this.style.display='none'"></td></tr>
-            <tr><td>锐利化</td></tr>
-        <tr class="img-box"><td><img src="/media/imgres/3.jpg" onerror="this.style.display='none'"></td></tr>
+        <tr>
+            <td>原图</td>
+        </tr>
+        <tr class="img-box">
+            <td><img src="{{ sourse }}" onerror="this.style.display='none'"></td>
+        </tr>
+        <tr>
+            <td>卷积核锐利化</td>
+        </tr>
+        <tr class="img-box">
+            <td><img src="{{ img_deblur }}" onerror="this.style.display='none'"></td>
+        </tr>
+        <tr>
+            <td>B^100*X</td>
+        </tr>
+
+        <tr class="img-box">
+            <td><img src="{{ blur_B }}" onerror="this.style.display='none'"></td>
+        </tr>
+        <tr>
+            <td>X*C^100</td>
+        </tr>
+        <tr class="img-box">
+            <td><img src="{{ blur_C }}" onerror="this.style.display='none'"></td>
+        </tr>
+        <tr>
+            <td>B^100*X*C^100</td>
+        </tr>
+
+        <tr class="img-box">
+            <td><img src="{{ blur }}" onerror="this.style.display='none'"></td>
+        </tr>
+        <tr>
+            <td>素描效果</td>
+        </tr>
+        <tr class="img-box">
+            <td><img src="/media/imgres/3.jpg" onerror="this.style.display='none'"></td>
+        </tr>
+        <tr>
+            <td>雕塑效果</td>
+        </tr>
+        <tr class="img-box">
+            <td><img src="/media/imgres/3.jpg" onerror="this.style.display='none'"></td>
+        </tr>
+        <tr>
+            <td>自定义卷积核</td>
+        </tr>
+        <tr class="img-box">
+            <td><img src="{{ img_cus }}" onerror="this.style.display='none'"></td>
+        </tr>
 
     </table>
 </div>
@@ -146,7 +178,7 @@
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
     <div class="container">
-        <div class="navbar-header" >
+        <div class="navbar-header">
             <a class="navbar-brand">COPYRIGHT@蔡潮鑫，冉学斌</a>
         </div>
     </div>
