@@ -26,10 +26,12 @@ def upload(request):
         m33 = request.POST['m33']
 
         print(m11)
+        print(m12)
 
 
         print(new_img.img.path)
         img_name = str(new_img.img.name).split('/')[1].split('.')[0]
+
         if not os.path.isdir("media/" + img_name):
             os.mkdir("media/" + img_name)
 
