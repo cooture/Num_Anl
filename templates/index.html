@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>數值分析——影像模糊與銳利化</title>
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fileinput.css">
+    <script src="../static/jquery-2.2.1.min.js"></script>
+    <script src="../static/bootstrap.min.js"></script>
+    <script src="../static/fileinput.js"></script>
+    <script src="../static/zh.js"></script>
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        .img-box {
+            width: 400px;
+            height: 300px;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="#" class="navbar-brand">歡迎來到影像模糊與銳利化在線網站</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">主頁</a></li>
+                <li data-toggle="modal" data-target="#mymodal" data-whatever="@ime"><a href="#">關於我們</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<form method="POST" enctype="multipart/form-data" role="form" class="form-inline">
+    {% csrf_token %}
+    <div style="text-align: center">
+    <h3>请输入自定义卷积核</h3>
+    </div>
+
+    <table align="center">
+            <tr>
+                <td>
+                    <label class="sr-only"></label>
+                    <input type="text" style="width: 60px;" class="form-control" placeholder="0" name="m11">
+                </td>
+                <td>
+                    <label class="sr-only"></label>
+                    <input type="text" style="width: 60px;" class="form-control" placeholder="-1" name="m12">
+                </td>
+                <td>
+                    <label class="sr-only"></label>
+                    <input type="text" style="width: 60px;" class="form-control" placeholder="0" name="m13">
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <label class="sr-only"></label>
+                    <input type="text" style="width: 60px;" class="form-control" placeholder="-1" name="m21">
+                </td>
+                <td>
+                        <label class="sr-only"></label>
+                        <input type="text" style="width: 60px;" class="form-control" placeholder="5" name="m22">
+                </td>
+                <td>
+                     <label class="sr-only"></label>
+                    <input type="text" style="width: 60px;" class="form-control" placeholder="-1" name="m23">
+
+                </td>
+
+
+            </tr>
+            <tr>
+                <td>
+
+                        <label class="sr-only"></label>
+                        <input type="text" style="width: 60px;" class="form-control" placeholder="0" name="m31">
+
+                </td>
+                <td>
+
+                        <label class="sr-only"></label>
+                        <input type="text" style="width: 60px;" class="form-control" placeholder="-1" name="m32">
+
+
+                </td>
+                <td>
+
+                        <label class="sr-only"></label>
+                        <input type="text" style="width: 60px;" class="form-control" placeholder="0" name="m33">
+
+                </td>
+
+            </tr>
+        </table>
+    <hr>
+    <hr>
+
+    <div style="text-align: center">
+    <hr>
+    <h3>請選擇你要模糊或銳利化的圖片</h3>
+</div>
+
+    <div style="text-align: center">
+        <div class="form-group">
+            <input type="file" class="file" name="upimg">
+            <hr>
+        </div>
+    </div>
+
+</form>
+<hr>
+
+
+
+
+<hr>
+<div class="text-info" style="text-align: center;font-size: 20px">
+    <table class="table table-bordered" align="center" style="width: 400px">
+            <tr><td>原图</td></tr>
+            <tr class="img-box"><td><img src="{{ sourse}}" onerror="this.style.display='none'"></td></tr>
+            <tr><td>B^100*X</td></tr>
+        <tr class="img-box"><td><img src="{{ blur_B}}" onerror="this.style.display='none'"></td></tr>
+            <tr><td>X*C^100</td></tr>
+        <tr class="img-box"><td><img src="{{ blur_C }}" onerror="this.style.display='none'"></td></tr>
+            <tr><td>B^100*X*C^100</td></tr>
+        <tr class="img-box"><td><img src="{{ blur}}" onerror="this.style.display='none'"></td></tr>
+            <tr><td>自定义卷积核</td></tr>
+        <tr class="img-box"><td><img src="{{ img_deblur }}" onerror="this.style.display='none'"></td></tr>
+            <tr><td>素描效果</td></tr>
+        <tr class="img-box"><td><img src="/media/imgres/3.jpg" onerror="this.style.display='none'"></td></tr>
+            <tr><td>雕塑效果</td></tr>
+        <tr class="img-box"><td><img src="/media/imgres/3.jpg" onerror="this.style.display='none'"></td></tr>
+            <tr><td>锐利化</td></tr>
+        <tr class="img-box"><td><img src="/media/imgres/3.jpg" onerror="this.style.display='none'"></td></tr>
+
+    </table>
+</div>
+
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+    <div class="container">
+        <div class="navbar-header" >
+            <a class="navbar-brand">COPYRIGHT@蔡潮鑫，冉学斌</a>
+        </div>
+    </div>
+</nav>
+
+<div class="modal fade bs-example-modal-sm" id="mymodal" role="dialog" aria-label="myModalLable" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">关于我们</h4>
+            </div>
+            <div class="modal-body">
+                <label>本网页由冉学斌、蔡潮鑫制作</label>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    好的
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#mymodal").modal("hide");
+
+</script>
+
+</body>
+</html>
