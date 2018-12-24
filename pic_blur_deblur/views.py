@@ -33,10 +33,13 @@ def upload(request):
 
         if not os.path.isdir("media/" + img_name):
             os.mkdir("media/" + img_name)
-
+        rgbimg = cv2.imread(new_img.img.path)
         cvimg = cv2.imread(new_img.img.path, 0)
         img_blur, img_B, img_C = blur(cvimg, 100, 1 / 4, 1 / 2, 1 / 4)
         img_deblur = cus_filter2D(cvimg)
+        # {{-1,-1,0},{-1,0,1},{0,1,1}}
+        img_fudiao = cus_filter2D(rgbimg,-1,-1,0,-1,0,1,0,1,1)
+
         img_cus = cus_filter2D(cvimg, m11, m12, m13, m21, m22, m23, m31, m32, m33)
 
         cv2.imwrite("media/" + img_name + "/source.jpg", cvimg)
@@ -45,6 +48,7 @@ def upload(request):
         cv2.imwrite("media/" + img_name + "/blur_C.jpg", img_C)
         cv2.imwrite("media/" + img_name + "/img_deblur.jpg", img_deblur)
         cv2.imwrite("media/" + img_name + "/img_cus.jpg", img_cus)
+        cv2.imwrite("media/" + img_name + "/img_fudiao.jpg", img_fudiao)
 
         content = {
             'aaa': new_img,
@@ -54,6 +58,7 @@ def upload(request):
             'blur_C': "/media/" + img_name + "/blur_C.jpg",
             'img_deblur': "/media/" + img_name + "/img_deblur.jpg",
             'img_cus': "/media/" + img_name + "/img_cus.jpg",
+            'img_fudiao': "/media/" + img_name + "/img_fudiao.jpg",
 
         }
         return render(request, 'index.html', content)
